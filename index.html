@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,31 +31,14 @@
         .glyph:active {
             background-color: lightblue;
         }
-        .room {
+        .expanded {
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 80vw;
-            height: 60vh;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(2);
+            z-index: 10;
             background-color: white;
             border: 3px solid black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10vw;
-            text-align: center;
-        }
-        .room::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top left, transparent 49%, black 50%, black 51%, transparent 52%),
-                        linear-gradient(to top right, transparent 49%, black 50%, black 51%, transparent 52%);
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -62,15 +46,11 @@
     <script>
         const glyphs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '@', '?', ':', ';'];
         
+        // Assign a specific color to each letter
         const colorMap = {};
         glyphs.forEach(letter => {
             colorMap[letter] = `hsl(${Math.floor(Math.random() * 360)}, 80%, 80%)`;
         });
-        
-        let room = document.createElement('div');
-        room.className = 'room';
-        room.style.display = 'none';
-        document.body.appendChild(room);
         
         glyphs.forEach(letter => {
             let div = document.createElement('div');
@@ -78,14 +58,14 @@
             div.textContent = letter;
             div.addEventListener('click', function() {
                 document.body.style.backgroundColor = colorMap[letter];
-                room.textContent = letter;
-                room.style.display = 'flex';
+                if (this.classList.contains('expanded')) {
+                    this.classList.remove('expanded');
+                } else {
+                    document.querySelectorAll('.glyph').forEach(el => el.classList.remove('expanded'));
+                    this.classList.add('expanded');
+                }
             });
             document.body.appendChild(div);
-        });
-        
-        room.addEventListener('click', function() {
-            this.style.display = 'none';
         });
     </script>
 </body>
