@@ -45,16 +45,18 @@
     <script>
         const glyphs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '@', '?', ':', ';'];
         
-        function getRandomColor() {
-            return `hsl(${Math.floor(Math.random() * 360)}, 80%, 80%)`;
-        }
+        // Assign a specific color to each letter
+        const colorMap = {};
+        glyphs.forEach(letter => {
+            colorMap[letter] = `hsl(${Math.floor(Math.random() * 360)}, 80%, 80%)`;
+        });
         
         glyphs.forEach(letter => {
             let div = document.createElement('div');
             div.className = 'glyph';
             div.textContent = letter;
             div.addEventListener('click', function() {
-                document.body.style.backgroundColor = getRandomColor();
+                document.body.style.backgroundColor = colorMap[letter];
                 if (this.classList.contains('expanded')) {
                     this.classList.remove('expanded');
                 } else {
