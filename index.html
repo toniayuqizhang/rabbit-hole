@@ -13,6 +13,7 @@
             justify-content: center;
             padding: 20px;
             background-color: #f8f8f8;
+            transition: background-color 0.5s;
         }
         .glyph {
             font-size: 50px;
@@ -44,11 +45,16 @@
     <script>
         const glyphs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '@', '?', ':', ';'];
         
+        function getRandomColor() {
+            return `hsl(${Math.floor(Math.random() * 360)}, 80%, 80%)`;
+        }
+        
         glyphs.forEach(letter => {
             let div = document.createElement('div');
             div.className = 'glyph';
             div.textContent = letter;
             div.addEventListener('click', function() {
+                document.body.style.backgroundColor = getRandomColor();
                 if (this.classList.contains('expanded')) {
                     this.classList.remove('expanded');
                 } else {
